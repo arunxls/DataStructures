@@ -21,34 +21,48 @@ public class Tree<T extends Comparable<T>> {
     }
 
     public void insert(T element) {
-        addKey(findNode(element), element);
+        Cell<T> cell = new Cell<T>(element);
+        add(findCell(cell), cell);
     }
 
     public void delete(T element) {
+        Cell<T> cell = new Cell<T>(element);
         if(search(element)){
-            deleteKey(findNode(element),element);
+            remove(findCell(cell),cell);
         } else {
             System.out.println("The element '" + element + "' does not exist!");
         }
     }
 
     public Boolean search(T element) {
-        return findNode(element).containsKey(element);
+        Integer index = 0;
+        Node<T> node = findCell(new Cell<T>(element));
+        for(Cell<T> cell : node.getCells()) {
+            if(cell.key.compareTo(element) == 0) { break; }
+            index++;
+        }
+        return !(index.equals(node.size()));
     }
 
     public T min() {
-        ArrayList<T> keys = findNode(this.root.minKey()).getKeys();
-        return keys.get(0);
+        Node<T> node = this.root;
+        while (!node.isLeaf()) {
+            node = node.minCell().child;
+        }
+        return node.minCell().key;
     }
 
     public T max() {
-        ArrayList<T> keys = findNode(this.root.maxKey()).getKeys();
-        return keys.get(keys.size() - 1);
+        Node<T> node = this.root;
+        while (!node.isLeaf()) {
+            node = node.maxCell().child;
+        }
+        return node.maxCell().key;
     }
 
-    private void addKey(Node<T> node, T element) {
-        if(node.addKey(node.findPositionToInsert(element), element).size() > max_nodes) {
-            reportAddToParent(node, node.split(min_nodes));
+    private void add(Node<T> node, Cell<T> cell) {
+        if(node.addCell(findPositionToInsert(node, cell), cell).size() > max_nodes) {
+            reportAddToParent(node, split(node, min_nodes));
         }
     }
 
@@ -57,41 +71,57 @@ public class Tree<T extends Comparable<T>> {
         if(parent == null) {
             // We need a new root
             parent = newRoot();
-            parent.addMaxChild(sibling1);
-            addKey(parent,sibling1.maxKey());
+            add(parent,new Cell<T>(sibling1));
             this.root = parent;
             sibling1.setParent(this.root);
             sibling2.setParent(this.root);
         }
-        sibling1.updateParentKey();
-        parent.addChild(parent.findPositionToInsert(sibling2.maxKey()),sibling2);
-        addKey(parent,sibling2.maxKey());
+        updateParent(sibling1);
+        add(parent,new Cell<T>(sibling2, sibling2.maxCell().key));
+    }
+
+    private void updateParent(Node<T> node) {
+        node.getParent().getCell(getIndexInParent(node)).key = node.maxCell().key;
+    }
+
+    private Integer getIndexInParent(Node<T> node) {
+        if (node.isRoot()) {
+            return -1;
+        } else {
+            Integer index = 0;
+            for (Cell<T> cell : node.getParent().getCells()) {
+                if ((cell.child) == node) break;
+                index++;
+            }
+            return index;
+        }
     }
 
     private Node<T> newRoot() {
-        return new Node<T>(new ArrayList<T>(), new ArrayList<Node<T>>(), null);
+        return new Node<T>(null);
     }
 
-    private Node<T> findNode(T element) {
+    private Node<T> findCell(Cell<T> cell) {
         Node<T> node = this.root;
         while(!node.isLeaf()) {
-            node = node.getChild(node.findPositionToSearch(element));
+            node = node.getCell(findPositionToSearch(node, cell)).child;
         }
         return node;
     }
 
-    private void deleteKey(Node<T> node, T element) {
-        if(node.isRoot()) {
-            node.removeKey(node.findPositionToInsert(element));
-            if(!node.isLeaf() && (node.getChildren().size()) < min_nodes) {
-                // In this case, we promote the combination of all children to be the root
-                Node<T> new_root = newRoot();
-                for(Node<T> child : node.getChildren()) {
-                    new_root.addChild(child.getChildren());
-//                    new_root.addKey(child.getKeys());
+    private void remove(Node<T> node, Cell<T> cell) {
+        node.removeCell(findPositionToInsert(node,cell));
+        if(node.isRoot() && !node.isLeaf() && !node.isEmpty() && (getChildren(node).size()) < min_nodes) {
+            // In this case, we promote the combination of all children to be the root
+            Node<T> new_root = newRoot();
+            for(Node<T> child : getChildren(node)) {
+                for(Cell<T> c : child.getCells()) {
+                    new_root.addMaxCell(c);
+                    c.child.setParent(new_root);
                 }
             }
-        } else {
+            this.root = new_root;
+        } else if(!node.isRoot() && !node.isEmpty() && node.size() < min_nodes) {
             // 1. Try to borrow max from the left sibling if left sibling > min nodes
             //    Update parentKey in this case since max for left sibling changes
             // 2. Try to borrow min from the right sibling if right sibling > min nodes
@@ -106,12 +136,91 @@ public class Tree<T extends Comparable<T>> {
             // In both these cases, deleteKey will need to be called recursively since parent may be
             // left will < min children.
             //
+
+            Node<T> left_sibling = leftSibling(node);
+            Node<T> right_sibling = rightSibling(node);
+
+            if(!(left_sibling == null) && (left_sibling.size() > min_nodes)) {
+                node.addMinCell(left_sibling.removeCell(left_sibling.size()-1));
+                updateParent(left_sibling);
+            } else if(!(right_sibling == null) && (right_sibling.size() > min_nodes)) {
+                node.addMaxCell(right_sibling.removeCell(0));
+                updateParent(node);
+            } else if (!(right_sibling == null)) {
+                merge(right_sibling, node);
+                remove(node.getParent(),right_sibling.minCell());
+            } else if (!(left_sibling == null)) {
+                merge(left_sibling, node);
+                remove(node.getParent(),left_sibling.maxCell());
+                updateParent(left_sibling);
+            } else {
+                // Throw exception!
+                Node<T> exception = null;
+                exception.getParent();
+            }
         }
     }
-//
-//    private void borrowFromMin(Node<T> sibling1, Node<T> sibling2) {
-//        sibling1.addMaxChild(sibling2.removeMinChild());
-//        addKey(sibling1, sibling2.removeMinKey());
-//
-//    }
+
+    private void merge(Node<T> node1, Node<T> node2) {
+        Cell<T> cell = new Cell<T>();
+        while(!node2.isEmpty()) {
+            cell = node2.removeMaxCell();
+            add(node1,cell);
+            if(cell.child != null) cell.child.setParent(node1);
+        }
+        if(cell.child != null) updateParent(cell.child);
+    }
+
+    private Integer findPositionToInsert(Node<T> node, Cell<T> cell) {
+        Integer index = 0;
+        for (Cell<T> c : node.getCells()) {
+            if(cell.compareTo(c) <= 0) { break; }
+            index++;
+        }
+        return index;
+    }
+
+    private Integer findPositionToSearch(Node<T> node, Cell<T> cell) {
+        Integer index = this.findPositionToInsert(node, cell);
+        if(index.equals(node.size())) index--;
+        return index;
+    }
+
+    private Node<T> split(Node<T> node, Integer start) {
+        Node<T> sibling = new Node<T>(node.getParent());
+
+        Integer stop = node.size();
+        for(int i = start; i < stop; i++) {
+            Cell<T> cell = node.removeCell(start);
+            sibling.addMaxCell(cell);
+            if(!node.isLeaf()) { cell.child.setParent(sibling); }
+        }
+        return sibling;
+    }
+
+    public ArrayList<Node<T>> getChildren(Node<T> node) {
+        ArrayList<Node<T>> nodes = new ArrayList<Node<T>>();
+        for(Cell<T> cell : node.getCells()) {
+            if(cell.child != null) nodes.add(cell.child);
+        }
+        return nodes;
+    }
+
+    private Node<T> leftSibling(Node<T> node) {
+        Integer index = getIndexInParent(node);
+        if(index <= 0){
+            return null;
+        } else {
+            return node.getParent().getCell(index -1).child;
+        }
+    }
+
+    private Node<T> rightSibling(Node<T> node) {
+        Integer index = getIndexInParent(node);
+        if(index == (node.getParent().size() -1)){
+            return null;
+        } else {
+            return node.getParent().getCell(index + 1).child;
+        }
+    }
 }

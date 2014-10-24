@@ -20,12 +20,12 @@ public class BFS<T extends Comparable<T>> {
             Node<T> node;
             while(!listIsEmpty(q1)) {
                 node = printFirstNode(q1);
-                if(!(node == null) && !node.isEmpty()) q2.addAll(node.getChildren());
+                if(!(node == null) && !node.isEmpty()) q2.addAll(tree.getChildren(node));
             }
             System.out.println(' ');
             while(!listIsEmpty(q2)) {
                 node = printFirstNode(q2);
-                if(!(node == null) && !node.isEmpty()) q1.addAll(node.getChildren());
+                if(!(node == null) && !node.isEmpty()) q1.addAll(tree.getChildren(node));
             }
         }
         System.out.println("\n");
