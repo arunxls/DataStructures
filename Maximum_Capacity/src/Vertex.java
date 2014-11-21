@@ -21,10 +21,6 @@ public class Vertex {
         return edges_cache.contains(new Edge(this, v));
     }
 
-    public void addEdge (Edge e) {
-
-    }
-
     public void clearCache() {
         this.edges_cache = null;
     }
