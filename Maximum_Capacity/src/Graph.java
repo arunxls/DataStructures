@@ -7,11 +7,13 @@ import java.util.Random;
 public class Graph {
     ArrayList<Vertex> vertices;
     ArrayList<Vertex> vertices_cache;
+    ArrayList<Edge> edges;
     Integer size;
 
     public Graph(Integer size) {
         this.size = size;
         vertices = new ArrayList<Vertex>();
+        edges = new ArrayList<Edge>();
         for(int i = 0; i < size; i++) vertices.add(i, new Vertex(i));
     }
 
@@ -64,6 +66,7 @@ public class Graph {
         v1.edges_cache.add(e);
         v1.edges.add(e); v2.edges.add(e);
         v1.degree++; v2.degree++;
+        edges.add(e);
     }
 
     private Vertex getRandomVertexNotInSet(Vertex v, int min, int max) {

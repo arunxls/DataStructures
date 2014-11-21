@@ -6,11 +6,10 @@ import java.util.*;
 public class Edge implements Comparable {
     final Vertex v1;
     final Vertex v2;
-    Integer weight;
+    final Integer weight;
 
     public Edge(Vertex v2, Vertex v1) {
-        this.v2 = v2;
-        this.v1 = v1;
+        this.v2 = v2; this.v1 = v1;
         this.weight = randInt(1,1000);
     }
 
@@ -21,7 +20,7 @@ public class Edge implements Comparable {
     @Override
     public int compareTo(Object o) {
         Edge edge = (Edge) o;
-        return this.weight > edge.weight ? 1 : (this.weight == edge.weight ? 0 : -1);
+        return this.weight > edge.weight ? 1 : (this.weight.equals(edge.weight) ? 0 : -1);
     }
 
     @Override

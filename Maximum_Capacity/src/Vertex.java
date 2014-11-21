@@ -6,7 +6,7 @@ import java.util.HashSet;
  */
 public class Vertex {
     ArrayList<Edge> edges;
-    Integer index;
+    final Integer index;
     HashSet<Edge> edges_cache;
     Integer degree;
 

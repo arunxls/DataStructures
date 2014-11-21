@@ -13,7 +13,6 @@ public class Main {
 
         System.out.println("Enter the size of graph");
         size = Keyboard.nextInt();
-//        Heap heap = new Heap<Integer>(size);
 
         Graph g1 = new Graph(size); Graph g2 = new Graph(size);
 
@@ -28,5 +27,9 @@ public class Main {
         endTime = System.nanoTime();
 
         System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to generate dense graph");
+
+        Heap heap = new Heap(g2.edges);
+        System.out.println("Enter the size of graph");
+
     }
 }
