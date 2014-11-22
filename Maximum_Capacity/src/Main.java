@@ -28,8 +28,11 @@ public class Main {
 
         System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to generate dense graph");
 
-        Heap heap = new Heap(g2.edges);
-        System.out.println("Enter the size of graph");
+        Heap heap = new Heap(g1.edges);
+//        Integer c = heap.heap.size();
+//        for(int i = 0; i < c; i++) {
+//            System.out.println(heap.removeMax().weight);
+//        }
 
     }
 }

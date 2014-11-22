@@ -8,10 +8,7 @@ public class Heap {
 
     public Heap(ArrayList<Edge> heap) {
         this.heap = new ArrayList<Edge>(heap);
-
-        for(int i = getParentIndex(heap.size()-1); i >= 0; i--) {
-            heapify(i);
-        }
+        heapify();
     }
 
     public Edge max() {
@@ -19,36 +16,49 @@ public class Heap {
     }
 
     public Edge removeMax() {
-        Edge tmp = heap.get(0);
-        heap.set(0, heap.get(heap.size()-1));
-        heap.set(heap.size() - 1, tmp);
-        //heapify();
+        swap(0, heap.size()-1);
+        Edge tmp = heap.remove(heap.size()-1);
+        shiftDown(0);
         return tmp;
     }
 
     public void insert (Edge e) {
         heap.add(e);
-        //heapify();
+        shiftUp(heap.size() -1);
     }
 
     private Integer getParentIndex(Integer child) {
         return (int) Math.ceil(((double) child )/2) - 1;
     }
 
-    private void heapify(Integer index) {
-        Integer left_child = 2*index + 1;
-        Integer right_child = 2*index + 2;
+    private void heapify() {
+        for(int i = getParentIndex(heap.size()-1); i >= 0; i--) shiftDown(i);
+    }
 
-        if(left_child >= heap.size() && right_child >= heap.size()) return;
+    private void shiftDown(Integer parent) {
+        Integer lchild = 2*parent + 1;
+        Integer rchild = 2*parent + 2;
 
-        if(left_child < heap.size() && heap.get(index).compareTo(heap.get(left_child)) == -1) {
-            swap(left_child, index);
-            heapify(left_child);
+        if(lchild >= heap.size() && rchild >= heap.size()) return;
+
+        if(lchild < heap.size() && heap.get(parent).compareTo(heap.get(lchild)) == -1) {
+            swap(lchild, parent);
+            shiftDown(lchild);
         }
 
-        if(right_child < heap.size() && heap.get(index).compareTo(heap.get(right_child)) == -1){
-            swap(right_child, index);
-            heapify(right_child);
+        if(rchild < heap.size() && heap.get(parent).compareTo(heap.get(rchild)) == -1) {
+            swap(rchild, parent);
+            shiftDown(rchild);
+        }
+    }
+
+    private void shiftUp(Integer child) {
+        Integer parent = getParentIndex(child);
+        if(parent < 0) return;
+
+        if(heap.get(parent).compareTo(heap.get(child)) == -1) {
+            swap(child, parent);
+            shiftUp(parent);
         }
     }
 

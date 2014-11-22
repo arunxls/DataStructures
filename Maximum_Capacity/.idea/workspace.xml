@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="198" max-vertical-offset="615">
-              <caret line="28" column="65" selection-start-line="28" selection-start-column="65" selection-end-line="28" selection-end-column="65" />
+            <state vertical-scroll-proportion="0.107913665" vertical-offset="180" max-vertical-offset="660">
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -35,16 +35,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Heap.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Heap.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Heap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8201439" vertical-offset="438" max-vertical-offset="990">
-              <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+            <state vertical-scroll-proportion="14.384615" vertical-offset="749" max-vertical-offset="1140">
+              <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
               <folding>
-                <element signature="e#341#342#0" expanded="true" />
-                <element signature="e#375#376#0" expanded="true" />
-                <element signature="e#707#708#0" expanded="true" />
-                <element signature="e#770#771#0" expanded="true" />
+                <element signature="e#259#260#0" expanded="true" />
+                <element signature="e#293#294#0" expanded="true" />
+                <element signature="e#599#600#0" expanded="true" />
+                <element signature="e#662#663#0" expanded="true" />
+                <element signature="e#692#693#0" expanded="true" />
+                <element signature="e#776#777#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -53,8 +55,8 @@
       <file leaf-file-name="Graph.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Graph.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="465" max-vertical-offset="1500">
-              <caret line="64" column="34" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="873" max-vertical-offset="1500">
+              <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -74,7 +76,7 @@
         <entry file="file://$PROJECT_DIR$/src/Edge.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
-              <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
+              <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -91,11 +93,11 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/Foo.java" />
+        <option value="$PROJECT_DIR$/src/Vertex.java" />
+        <option value="$PROJECT_DIR$/src/Heap.java" />
+        <option value="$PROJECT_DIR$/src/Edge.java" />
         <option value="$PROJECT_DIR$/src/Graph.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
-        <option value="$PROJECT_DIR$/src/Vertex.java" />
-        <option value="$PROJECT_DIR$/src/Edge.java" />
-        <option value="$PROJECT_DIR$/src/Heap.java" />
       </list>
     </option>
   </component>
@@ -448,12 +450,12 @@
       <workItem from="1416436332348" duration="12526000" />
       <workItem from="1416498629118" duration="3002000" />
       <workItem from="1416547984654" duration="9063000" />
-      <workItem from="1416598082329" duration="8546000" />
+      <workItem from="1416598082329" duration="11466000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46993000" />
+    <option name="totallyTimeSpent" value="49913000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -505,14 +507,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>31</line>
-          <properties />
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
@@ -539,10 +533,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="180">
           <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
-            <element signature="e#341#342#0" expanded="true" />
-            <element signature="e#375#376#0" expanded="true" />
-            <element signature="e#707#708#0" expanded="true" />
-            <element signature="e#770#771#0" expanded="true" />
+            <element signature="e#259#260#0" expanded="true" />
+            <element signature="e#293#294#0" expanded="true" />
+            <element signature="e#599#600#0" expanded="true" />
+            <element signature="e#662#663#0" expanded="true" />
+            <element signature="e#692#693#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -823,21 +819,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Graph.java">
+    <entry file="file://$PROJECT_DIR$/src/Edge.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="1500">
-          <caret line="64" column="34" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="198" max-vertical-offset="615">
-          <caret line="28" column="65" selection-start-line="28" selection-start-column="65" selection-end-line="28" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -849,23 +835,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Edge.java">
+    <entry file="file://$PROJECT_DIR$/src/Heap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
-          <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
+        <state vertical-scroll-proportion="14.384615" vertical-offset="749" max-vertical-offset="1140">
+          <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+          <folding>
+            <element signature="e#259#260#0" expanded="true" />
+            <element signature="e#293#294#0" expanded="true" />
+            <element signature="e#599#600#0" expanded="true" />
+            <element signature="e#662#663#0" expanded="true" />
+            <element signature="e#692#693#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Graph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="873" max-vertical-offset="1500">
+          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Heap.java">
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8201439" vertical-offset="438" max-vertical-offset="990">
-          <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.107913665" vertical-offset="180" max-vertical-offset="660">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
-            <element signature="e#341#342#0" expanded="true" />
-            <element signature="e#375#376#0" expanded="true" />
-            <element signature="e#707#708#0" expanded="true" />
-            <element signature="e#770#771#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
