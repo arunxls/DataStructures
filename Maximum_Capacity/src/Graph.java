@@ -55,7 +55,7 @@ public class Graph {
         }
 
 //        int count = 0;
-//        for (Vertex v1 : vertices)
+//        for (Vertex v1 : graph)
 //            count += v1.degree;
 //
 //        System.out.println("Degree density is " + ((double)count/(size*size)));

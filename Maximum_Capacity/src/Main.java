@@ -1,4 +1,6 @@
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -7,7 +9,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         int size;
-        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        ArrayList<Edge> path;
+        DecimalFormat numberFormat = new DecimalFormat("#.00000");
 
         Scanner Keyboard = new Scanner(System.in);
 
@@ -23,16 +26,38 @@ public class Main {
         System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to generate sparse graph");
 
         startTime = System.nanoTime();
-        g2.generateDense(0.2);
+//        g2.generateDense(0.2);
         endTime = System.nanoTime();
 
         System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to generate dense graph");
 
-        Heap heap = new Heap(g1.edges);
-//        Integer c = heap.heap.size();
-//        for(int i = 0; i < c; i++) {
-//            System.out.println(heap.removeMax().weight);
-//        }
 
+        Integer start = randInt(0, size);
+        Integer end = randInt(0, size);
+        while(end == start) {
+            end = randInt(0,size);
+        }
+
+        System.out.println("Picked " + start + " as source and " + end + " as destination vertex");
+
+        startTime = System.nanoTime();
+        path = new Kruskals(g1.vertices.get(start), g1.vertices.get(end), g1).findMaximumCapacityPath();
+        endTime = System.nanoTime();
+        System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Kruskal's on sparse graph");
+
+        startTime = System.nanoTime();
+        path = new Djikstras(g1.vertices.get(start), g1.vertices.get(end), g1).findMaximumCapacityPath();
+        endTime = System.nanoTime();
+        System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Kruskal's on sparse graph");
+
+        startTime = System.nanoTime();
+        path = new Kruskals(g2.vertices.get(start), g2.vertices.get(end), g2).findMaximumCapacityPath();
+        endTime = System.nanoTime();
+        System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Kruskal's on dense graph");
+    }
+
+    private static int randInt(int min, int max) {
+        return new Random().nextInt((max - min) + 1) + min;
     }
 }
+
