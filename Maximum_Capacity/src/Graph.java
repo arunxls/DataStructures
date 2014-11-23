@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 /**
@@ -43,22 +44,25 @@ public class Graph {
     }
 
     public void generateDense(double percent) {
-        for(int i = 0; i < size; i++) {
-            ArrayList<Integer> cache = new ArrayList<Integer>();
-            for(int j = 0; j < size; j++) cache.add(j);
-
-            Vertex v1 = vertices.get(i);
-            for (int j = 0; j < size; j++)
-                if(Math.random() < (percent/2))
-                    addEdge(v1,getRandomVertexNotInSetFromRange(v1,cache));
-            v1.clearCache();
+        HashSet<Edge> edges_cache = new HashSet<Edge>();
+        for(int i=0; i < size; i++) {
+            for(int j=0; j< size; j++) {
+                Edge e = new Edge(vertices.get(i), vertices.get(j));
+                if(!edges_cache.contains(e)) {
+                    if(Math.random() < (percent/2)) {
+                        vertices.get(i).edges.add(e); vertices.get(j).edges.add(e);
+                        vertices.get(i).degree++; vertices.get(j).degree++;
+                        edges.add(e);
+                        edges_cache.add(e);
+                    }
+                }
+            }
         }
+        int count = 0;
+        for (Vertex v1 : vertices)
+            count += v1.degree;
 
-//        int count = 0;
-//        for (Vertex v1 : graph)
-//            count += v1.degree;
-//
-//        System.out.println("Degree density is " + ((double)count/(size*size)));
+        System.out.println("Degree density is " + ((double)count/(size*size)));
     }
 
     public void addEdge(Vertex v1, Vertex v2) {
@@ -78,17 +82,6 @@ public class Graph {
             if(!(v.edgeInSet(vertices_cache.get(index)) || v2.edgeInSet(vertices_cache.get(index)))) break;
         }
         return vertices_cache.get(index);
-    }
-
-    private Vertex getRandomVertexNotInSetFromRange(Vertex v, ArrayList<Integer> range) {
-        Integer index;
-        while (true) {
-            index = range.remove(randInt(0, range.size() - 1));
-            Vertex v2 = vertices.get(index);
-            if (v2.index.equals(v.index)) continue;
-            if (!v.edgeInSet(v2)) break;
-        }
-        return vertices.get(index);
     }
 
     private static int randInt(int min, int max) {
