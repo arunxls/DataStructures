@@ -3,26 +3,38 @@ import java.util.ArrayList;
 /**
  * Created by arunk on 11/21/14.
  */
-public class Heap {
-    public ArrayList<Edge> heap;
+public class Heap<T extends Comparable> {
+    public ArrayList<T> heap;
 
-    public Heap(ArrayList<Edge> heap) {
-        this.heap = new ArrayList<Edge>(heap);
+    public Heap(ArrayList<T> heap) {
+        this.heap = new ArrayList<T>(heap);
         heapify();
     }
 
-    public Edge max() {
-        return heap.get(0);
+    public Heap() {
+        this.heap = new ArrayList<T>();
     }
 
-    public Edge removeMax() {
+    public T delete(T e) {
+        int index = 0;
+        for(T t: heap) {
+            if(t.equals(e)) break;
+            index++;
+        }
+        swap(index, heap.size()-1);
+        T tmp = heap.remove(heap.size()-1);
+        shiftDown(index);
+        return tmp;
+    }
+
+    public T removeMax() {
         swap(0, heap.size()-1);
-        Edge tmp = heap.remove(heap.size()-1);
+        T tmp = heap.remove(heap.size()-1);
         shiftDown(0);
         return tmp;
     }
 
-    public void insert (Edge e) {
+    public void insert (T e) {
         heap.add(e);
         shiftUp(heap.size() -1);
     }
@@ -63,7 +75,7 @@ public class Heap {
     }
 
     private void swap(Integer i, Integer j) {
-        Edge tmp = heap.get(i);
+        T tmp = heap.get(i);
         heap.set(i, heap.get(j));
         heap.set(j, tmp);
     }

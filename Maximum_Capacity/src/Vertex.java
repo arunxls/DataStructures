@@ -11,11 +11,14 @@ public class Vertex implements Comparable{
     Integer degree;
     Vertex parent;
     Integer rank;
+    Integer status;
+    Integer distance;
 
     public Vertex(Integer index) {
         this.index = index;
         this.degree = 0;
         this.rank = 0;
+        this.distance = -1; // Djikstra distance cannot be negative, let this equal -infinity
         this.parent = this;
         edges_cache = new HashSet<Edge>();
         edges = new ArrayList<Edge>();
@@ -32,7 +35,7 @@ public class Vertex implements Comparable{
     @Override
     public int compareTo(Object o) {
         Vertex v = (Vertex) o;
-        return this.index > v.index ? 1 : (this.index.equals(v.index) ? 0 : -1);
+        return this.distance > v.distance ? 1 : (this.distance.equals(v.distance) ? 0 : -1);
     }
 
     @Override
@@ -43,5 +46,29 @@ public class Vertex implements Comparable{
     @Override
     public boolean equals(Object obj) {
         return this.hashCode() == obj.hashCode();
+    }
+
+    public Boolean isFringe() {
+        return status == 1;
+    }
+
+    public Boolean isSeen() {
+        return status == 2;
+    }
+
+    public Boolean isUnSeen() {
+        return status == 0;
+    }
+
+    public void setFringe() {
+        status = 1;
+    }
+
+    public void setSeen() {
+        status = 2;
+    }
+
+    public void setUnSeen() {
+        status = 0;
     }
 }

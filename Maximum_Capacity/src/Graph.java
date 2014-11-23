@@ -40,6 +40,10 @@ public class Graph {
             v.clearCache();
             if(v.degree != degree) System.out.println("Error! Vertex " + v.index + " has degree " + v.degree);
         }
+
+//        for(Vertex v: vertices) {
+//
+//        }
     }
 
     public void generateDense(double percent) {

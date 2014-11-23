@@ -6,14 +6,14 @@ import java.util.ArrayList;
 public class Kruskals {
     Vertex source;
     Vertex destination;
-    Heap edges;
+    Heap<Edge> edges;
     Graph graph;
     ArrayList<Vertex> stack;
 
     public Kruskals(Vertex source, Vertex destination, Graph graph) {
         this.source = source;
         this.destination = destination;
-        this.edges = new Heap(graph.edges);
+        this.edges = new Heap<Edge>(graph.edges);
         this.graph = graph;
         stack = new ArrayList<Vertex>();
     }
@@ -22,6 +22,7 @@ public class Kruskals {
         ArrayList<Edge> path = new ArrayList<Edge>();
         while(edges.heap.size() != 0) {
             Edge e = edges.removeMax();
+            System.out.println("Picked k " + e.weight);
             if(findParent(source).equals(findParent(destination))) break;
             if(!findParent(e.v1).equals(findParent(e.v2))) {
                 union(e);
