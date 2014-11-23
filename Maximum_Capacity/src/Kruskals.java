@@ -15,6 +15,7 @@ public class Kruskals {
         this.destination = destination;
         this.edges = new Heap<Edge>(graph.edges);
         this.graph = graph;
+        graph.cleanCache();
         stack = new ArrayList<Vertex>();
     }
 
@@ -22,13 +23,15 @@ public class Kruskals {
         ArrayList<Edge> path = new ArrayList<Edge>();
         while(edges.heap.size() != 0) {
             Edge e = edges.removeMax();
-            System.out.println("Picked k " + e.weight);
             if(findParent(source).equals(findParent(destination))) break;
+//            System.out.println("Selected k " + e.weight);
             if(!findParent(e.v1).equals(findParent(e.v2))) {
+//                System.out.println("Picking k " + e.weight);
                 union(e);
                 path.add(e);
             }
         }
+        System.out.println("Bottleneck is " + path.get(path.size() -1).weight);
         return path;
     }
 
@@ -44,6 +47,7 @@ public class Kruskals {
         for(Vertex v1: stack) {
             v1.parent = parent;
         }
+        stack = new ArrayList<Vertex>();
         return parent;
     }
 
@@ -51,12 +55,13 @@ public class Kruskals {
         Vertex v1 = findParent(e.v1);
         Vertex v2 = findParent(e.v2);
 
-        if(v1.rank > v2.rank) v2.parent = v1;
-        if(v1.rank.equals(v2.rank)) {
+        if(v1.rank > v2.rank) {
+            v2.parent = v1;
+        } else if(v1.rank.equals(v2.rank)) {
             v2.parent = v1;
             v1.rank++;
+        } else {
+            v1.parent = v2;
         }
-        if(v1.rank < v2.rank) v1.parent = v2;
-
     }
 }

@@ -13,6 +13,7 @@ public class Djikstras {
         this.source = source;
         this.destination = destination;
         this.graph = graph;
+        graph.cleanCache();
         vertices = new Heap<Vertex>();
     }
 
@@ -28,7 +29,6 @@ public class Djikstras {
 
         while(!(destination.isSeen() || vertices.heap.size() == 0)) {
             Vertex v = vertices.removeMax();
-            System.out.println("Picked d " + v.index);
             addVerticesToHeap(v);
         }
         return path;
@@ -39,11 +39,17 @@ public class Djikstras {
         for(Edge e : graph.vertices.get(v.index).edges) {
             Vertex v2 = getCorrespondingVertex(e, v);
             if(v2.isSeen()) continue;
-            if(v2.isFringe() && (v2.distance < v.distance + e.weight)) vertices.delete(v2);
-            updateDistance(v, v2, e.weight);
-            vertices.insert(v2);
-            v2.setFringe();
-            v2.parent = v;
+            if(v2.isFringe() && (v2.distance < e.weight)) {
+                vertices.delete(v2);
+                updateDistance(v, v2, e.weight);
+                vertices.insert(v2);
+                v2.parent = v;
+            } else if(v2.isUnSeen()) {
+                updateDistance(v, v2, e.weight);
+                vertices.insert(v2);
+                v2.setFringe();
+                v2.parent = v;
+            }
         }
     }
 
@@ -54,6 +60,6 @@ public class Djikstras {
     }
 
     private void updateDistance(Vertex v1, Vertex v2, Integer weight) {
-        v2.distance = Math.max(v1.distance + weight, v2.distance);
+        v2.distance = weight;
     }
 }

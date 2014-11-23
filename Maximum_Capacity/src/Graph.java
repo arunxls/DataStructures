@@ -40,10 +40,6 @@ public class Graph {
             v.clearCache();
             if(v.degree != degree) System.out.println("Error! Vertex " + v.index + " has degree " + v.degree);
         }
-
-//        for(Vertex v: vertices) {
-//
-//        }
     }
 
     public void generateDense(double percent) {
@@ -97,5 +93,21 @@ public class Graph {
 
     private static int randInt(int min, int max) {
         return new Random().nextInt((max - min) + 1) + min;
+    }
+
+    public Integer getEdgeWeight(Vertex v1, Vertex v2) {
+        Edge e1 = new Edge(v1, v2);
+        for(Edge e2 : edges) {
+            if(e1.equals(e2)) e1=e2;
+        }
+        return e1.weight;
+    }
+
+    public void cleanCache() {
+        for(Vertex v: vertices) {
+            v.parent = v;
+            v.rank = 0;
+            v.distance = -1;
+        }
     }
 }
