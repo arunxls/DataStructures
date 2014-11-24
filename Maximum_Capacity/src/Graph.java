@@ -58,11 +58,11 @@ public class Graph {
                 }
             }
         }
-        int count = 0;
-        for (Vertex v1 : vertices)
-            count += v1.degree;
-
-        System.out.println("Degree density is " + ((double)count/(size*size)));
+//        int count = 0;
+//        for (Vertex v1 : vertices)
+//            count += v1.degree;
+//
+//        System.out.println("Degree density is " + ((double)count/(size*size)));
     }
 
     public void addEdge(Vertex v1, Vertex v2) {

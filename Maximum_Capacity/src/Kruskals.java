@@ -19,20 +19,20 @@ public class Kruskals {
         stack = new ArrayList<Vertex>();
     }
 
-    public ArrayList<Edge> findMaximumCapacityPath() {
+    public void findMaximumCapacityPath() {
         ArrayList<Edge> path = new ArrayList<Edge>();
+        Edge lastEdge = graph.edges.get(0);
         while(edges.heap.size() != 0) {
             Edge e = edges.removeMax();
             if(findParent(source).equals(findParent(destination))) break;
 //            System.out.println("Selected k " + e.weight);
             if(!findParent(e.v1).equals(findParent(e.v2))) {
 //                System.out.println("Picking k " + e.weight);
+                lastEdge = e;
                 union(e);
-                path.add(e);
             }
         }
-        System.out.println("Bottleneck is " + path.get(path.size() -1).weight);
-        return path;
+        System.out.println("Bottleneck is " + lastEdge.weight);
     }
 
     private Vertex find(Vertex v) {

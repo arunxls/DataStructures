@@ -7,45 +7,39 @@ public class Djikstras {
     Vertex source;
     Vertex destination;
     Graph graph;
-    Heap<Vertex> vertices;
 
     public Djikstras(Vertex source, Vertex destination, Graph graph) {
         this.source = source;
         this.destination = destination;
         this.graph = graph;
         graph.cleanCache();
-        vertices = new Heap<Vertex>();
     }
 
-    public ArrayList<Edge> findMaximumCapacityPath() {
-        ArrayList<Edge> path = new ArrayList<Edge>();
-
-        for(Vertex v : graph.vertices) {
-            v.setUnSeen();
-        }
+    public void findMaximumCapacityPathUsingHeap() {
+        Heap<Vertex> vertices = new Heap<Vertex>();
+        for(Vertex v : graph.vertices) v.setUnSeen();
 
         source.distance = 0;
-        addVerticesToHeap(source);
+        addVerticesToHeap(source, vertices);
 
         while(!(destination.isSeen() || vertices.heap.size() == 0)) {
             Vertex v = vertices.removeMax();
-            addVerticesToHeap(v);
+            addVerticesToHeap(v, vertices);
         }
-        return path;
     }
 
-    private void addVerticesToHeap(Vertex v) {
+    private void addVerticesToHeap(Vertex v, Heap<Vertex> vertices) {
         v.setSeen();
         for(Edge e : graph.vertices.get(v.index).edges) {
             Vertex v2 = getCorrespondingVertex(e, v);
             if(v2.isSeen()) continue;
             if(v2.isFringe() && (v2.distance < e.weight)) {
-                vertices.delete(v2);
-                updateDistance(v, v2, e.weight);
+//                vertices.delete(v2);
+                v2.distance = e.weight;
                 vertices.insert(v2);
                 v2.parent = v;
             } else if(v2.isUnSeen()) {
-                updateDistance(v, v2, e.weight);
+                v2.distance = e.weight;
                 vertices.insert(v2);
                 v2.setFringe();
                 v2.parent = v;
@@ -59,7 +53,52 @@ public class Djikstras {
         return v2;
     }
 
-    private void updateDistance(Vertex v1, Vertex v2, Integer weight) {
-        v2.distance = weight;
+    public void findMaximumCapacityPathWithoutHeap() {
+        ArrayList<Vertex> vertices = new ArrayList<Vertex>();
+        for(Vertex v : graph.vertices) v.setUnSeen();
+
+        source.distance = 0;
+        addVerticesToArray(source, vertices);
+
+        while(!(destination.isSeen() || vertices.size() == 0)) {
+            Vertex v = removeMaxFromArray(vertices);
+            addVerticesToArray(v, vertices);
+        }
+    }
+
+    private void addVerticesToArray(Vertex v, ArrayList<Vertex> vertices) {
+        v.setSeen();
+        for(Edge e : graph.vertices.get(v.index).edges) {
+            Vertex v2 = getCorrespondingVertex(e, v);
+            if(v2.isSeen()) continue;
+            if(v2.isFringe() && (v2.distance < e.weight)) {
+                v2.distance = e.weight;
+                v2.parent = v;
+            } else if(v2.isUnSeen()) {
+                v2.distance = e.weight;
+                vertices.add(v2);
+                v2.setFringe();
+                v2.parent = v;
+            }
+        }
+    }
+
+    public Vertex removeMaxFromArray(ArrayList<Vertex> vertices) {
+        Integer max = -1;
+        Integer i = -1;
+        Integer index = -1;
+        for(Vertex v: vertices) {
+            i++;
+            if(v.distance > max ) {
+                max = v.distance;
+                index = i;
+            }
+        }
+
+        Vertex tmp = vertices.get(index);
+        vertices.set(index, vertices.get(vertices.size()-1));
+        vertices.set((vertices.size()-1), tmp);
+        vertices.remove(vertices.size()-1);
+        return tmp;
     }
 }
