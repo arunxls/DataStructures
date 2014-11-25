@@ -15,18 +15,6 @@ public class Heap<T extends Comparable> {
         this.heap = new ArrayList<T>();
     }
 
-    public T delete(T e) {
-        int index = 0;
-        for(T t: heap) {
-            if(t.equals(e)) break;
-            index++;
-        }
-        swap(index, heap.size()-1);
-        T tmp = heap.remove(heap.size()-1);
-        shiftDown(index);
-        return tmp;
-    }
-
     public T removeMax() {
         swap(0, heap.size()-1);
         T tmp = heap.remove(heap.size()-1);

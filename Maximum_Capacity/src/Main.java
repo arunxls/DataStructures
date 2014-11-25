@@ -17,62 +17,75 @@ public class Main {
         System.out.println("Enter the size of graph");
         size = Keyboard.nextInt();
 
-        Graph g1 = new Graph(size); Graph g2 = new Graph(size);
+        int iteration = 0;
+        for(int i = 0; i < 5; i++ ) {
+            for(int j = 0; j < 5; j++) {
+                System.out.println("\n-------------- Starting Iteration " + iteration++ + " --------------");
+                Graph g1 = new Graph(size); Graph g2 = new Graph(size);
 
-        long startTime = System.nanoTime();
-        g1.generateSparse(6);
-        long endTime = System.nanoTime();
+                long startTime = System.nanoTime();
+                g1.generateSparse(6);
+                long endTime = System.nanoTime();
 
-        System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to generate sparse graph");
+                System.out.println("\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to generate sparse graph");
 
-        startTime = System.nanoTime();
-        g2.generateDense(0.2);
-        endTime = System.nanoTime();
+                startTime = System.nanoTime();
+                g2.generateDense(0.2);
+                endTime = System.nanoTime();
 
-        System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to generate dense graph");
+                System.out.println("\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to generate dense graph");
 
 
-        Integer start = randInt(0, size-1);
-        Integer end = randInt(0, size-1);
-        while(end.equals(start)) {
-            end = randInt(0,size);
+                Integer start = randInt(0, size-1);
+                Integer end = randInt(0, size-1);
+                while(end.equals(start)) {
+                    end = randInt(0,size);
+                }
+
+                System.out.println("\tPicked " + start + " as source and " + end + " as destination vertex");
+
+                System.out.println("\t------ Running against sparse graph ------");
+
+                startTime = System.nanoTime();
+                new Kruskals(g1.vertices.get(start), g1.vertices.get(end), g1).findMaximumCapacityPath();
+                endTime = System.nanoTime();
+                System.out.println("\t\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Kruskal's on sparse graph");
+
+                startTime = System.nanoTime();
+                new Djikstras(g1.vertices.get(start), g1.vertices.get(end), g1).findMaximumCapacityPathUsingHeap();
+                endTime = System.nanoTime();
+                System.out.println("\t\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's on sparse graph");
+//                getDjikstraParent(g1.vertices.get(end), g1, g1.vertices.get(start));
+
+                startTime = System.nanoTime();
+                new Djikstras(g1.vertices.get(start), g1.vertices.get(end), g1).findMaximumCapacityPathWithoutHeap();
+                endTime = System.nanoTime();
+                System.out.println("\t\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's without heap on sparse graph");
+//                getDjikstraParent(g1.vertices.get(end), g1, g1.vertices.get(start));
+
+
+                System.out.println("\t------ Running against dense graph ------");
+
+                startTime = System.nanoTime();
+                new Kruskals(g2.vertices.get(start), g2.vertices.get(end), g2).findMaximumCapacityPath();
+                endTime = System.nanoTime();
+                System.out.println("\t\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Kruskal's on dense graph");
+
+                startTime = System.nanoTime();
+                new Djikstras(g2.vertices.get(start), g2.vertices.get(end), g2).findMaximumCapacityPathUsingHeap();
+                endTime = System.nanoTime();
+                System.out.println("\t\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's on dense graph");
+//                getDjikstraParent(g2.vertices.get(end), g2, g2.vertices.get(start));
+
+                startTime = System.nanoTime();
+                new Djikstras(g2.vertices.get(start), g2.vertices.get(end), g2).findMaximumCapacityPathWithoutHeap();
+                endTime = System.nanoTime();
+                System.out.println("\t\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's without heap on dense graph");
+//                getDjikstraParent(g2.vertices.get(end), g2, g2.vertices.get(start));
+            }
         }
 
-        System.out.println("Picked " + start + " as source and " + end + " as destination vertex");
 
-        startTime = System.nanoTime();
-        new Kruskals(g1.vertices.get(start), g1.vertices.get(end), g1).findMaximumCapacityPath();
-        endTime = System.nanoTime();
-        System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Kruskal's on sparse graph");
-
-        startTime = System.nanoTime();
-        new Djikstras(g1.vertices.get(start), g1.vertices.get(end), g1).findMaximumCapacityPathUsingHeap();
-        endTime = System.nanoTime();
-        System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's on sparse graph");
-        getDjikstraParent(g1.vertices.get(end), g1, g1.vertices.get(start));
-
-        startTime = System.nanoTime();
-        new Djikstras(g1.vertices.get(start), g1.vertices.get(end), g1).findMaximumCapacityPathWithoutHeap();
-        endTime = System.nanoTime();
-        System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's without heap on sparse graph");
-        getDjikstraParent(g1.vertices.get(end), g1, g1.vertices.get(start));
-
-        startTime = System.nanoTime();
-        new Kruskals(g2.vertices.get(start), g2.vertices.get(end), g2).findMaximumCapacityPath();
-        endTime = System.nanoTime();
-        System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Kruskal's on dense graph");
-
-        startTime = System.nanoTime();
-        new Djikstras(g2.vertices.get(start), g2.vertices.get(end), g2).findMaximumCapacityPathUsingHeap();
-        endTime = System.nanoTime();
-        System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's on dense graph");
-        getDjikstraParent(g2.vertices.get(end), g2, g2.vertices.get(start));
-
-        startTime = System.nanoTime();
-        new Djikstras(g2.vertices.get(start), g2.vertices.get(end), g2).findMaximumCapacityPathWithoutHeap();
-        endTime = System.nanoTime();
-        System.out.println("Took " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's without heap on dense graph");
-        getDjikstraParent(g2.vertices.get(end), g2, g2.vertices.get(start));
 
 //        Graph g = fixed();
 //        start = 0;

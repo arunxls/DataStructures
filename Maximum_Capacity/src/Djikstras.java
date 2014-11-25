@@ -34,7 +34,6 @@ public class Djikstras {
             Vertex v2 = getCorrespondingVertex(e, v);
             if(v2.isSeen()) continue;
             if(v2.isFringe() && (v2.distance < e.weight)) {
-//                vertices.delete(v2);
                 v2.distance = e.weight;
                 vertices.insert(v2);
                 v2.parent = v;
