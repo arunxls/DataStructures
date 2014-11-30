@@ -3,12 +3,12 @@ import java.util.ArrayList;
 /**
  * Created by arunk on 11/21/14.
  */
-public class Djikstras {
+public class Dijkstras {
     Vertex source;
     Vertex destination;
     Graph graph;
 
-    public Djikstras(Vertex source, Vertex destination, Graph graph) {
+    public Dijkstras(Vertex source, Vertex destination, Graph graph) {
         this.source = source;
         this.destination = destination;
         this.graph = graph;

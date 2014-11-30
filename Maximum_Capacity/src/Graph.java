@@ -47,9 +47,9 @@ public class Graph {
         HashSet<Edge> edges_cache = new HashSet<Edge>();
         for(int i=0; i < size; i++) {
             for(int j=0; j< size; j++) {
-                Edge e = new Edge(vertices.get(i), vertices.get(j));
-                if(!edges_cache.contains(e)) {
-                    if(Math.random() < (percent/2)) {
+                if(Math.random() < (percent/2)) {
+                    Edge e = new Edge(vertices.get(i), vertices.get(j));
+                    if(!edges_cache.contains(e)) {
                         vertices.get(i).edges.add(e); vertices.get(j).edges.add(e);
                         vertices.get(i).degree++; vertices.get(j).degree++;
                         edges.add(e);

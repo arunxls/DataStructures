@@ -18,7 +18,7 @@ public class Vertex implements Comparable{
         this.index = index;
         this.degree = 0;
         this.rank = 0;
-        this.distance = -1; // Djikstra distance cannot be negative, let this equal -infinity
+        this.distance = -1; // Dijkstra distance cannot be negative, let this equal -infinity
         this.parent = this;
         edges_cache = new HashSet<Edge>();
         edges = new ArrayList<Edge>();

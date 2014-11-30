@@ -52,7 +52,7 @@ public class Heap<T extends Comparable> {
         }
     }
 
-    public void shiftUp(Integer child) {
+    private void shiftUp(Integer child) {
         Integer parent = getParentIndex(child);
         if(parent < 0) return;
 
