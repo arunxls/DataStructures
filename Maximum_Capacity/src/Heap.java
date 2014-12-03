@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Created by arunk on 11/21/14.
  */
-public class Heap<T extends Comparable> {
+public class Heap<T extends Comparable<T>> {
     public ArrayList<T> heap;
 
     public Heap(ArrayList<T> heap) {
@@ -32,7 +32,10 @@ public class Heap<T extends Comparable> {
     }
 
     private void heapify() {
-        for(int i = getParentIndex(heap.size()-1); i >= 0; i--) shiftDown(i);
+        Integer N = getParentIndex(heap.size()-1);
+        for(int i = N; i >= 0; i--)
+            shiftDown(i);
+
     }
 
     private void shiftDown(Integer parent) {
@@ -41,14 +44,18 @@ public class Heap<T extends Comparable> {
 
         if(lchild >= heap.size() && rchild >= heap.size()) return;
 
+        Integer max = parent;
         if(lchild < heap.size() && heap.get(parent).compareTo(heap.get(lchild)) == -1) {
-            swap(lchild, parent);
-            shiftDown(lchild);
+            max = lchild;
         }
 
-        if(rchild < heap.size() && heap.get(parent).compareTo(heap.get(rchild)) == -1) {
-            swap(rchild, parent);
-            shiftDown(rchild);
+         if(rchild < heap.size() && heap.get(max).compareTo(heap.get(rchild)) == -1) {
+             max = rchild;
+        }
+
+        if(parent != max) {
+            swap(max, parent);
+            shiftDown(max);
         }
     }
 

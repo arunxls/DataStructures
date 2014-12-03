@@ -94,10 +94,6 @@ public class Dijkstras {
             }
         }
 
-        Vertex tmp = vertices.get(index);
-        vertices.set(index, vertices.get(vertices.size()-1));
-        vertices.set((vertices.size()-1), tmp);
-        vertices.remove(vertices.size()-1);
-        return tmp;
+        return vertices.remove((int) index);
     }
 }

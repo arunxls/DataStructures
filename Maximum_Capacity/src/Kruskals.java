@@ -32,14 +32,14 @@ public class Kruskals {
                 union(e);
             }
         }
-//        System.out.println("Bottleneck is " + lastEdge.weight);
+        System.out.println("Bottleneck is " + lastEdge.weight);
     }
 
     private Vertex find(Vertex v) {
         Vertex parent = v.parent;
         if(parent.equals(v)) return parent;
         stack.add(v);
-        return findParent(parent);
+        return find(parent);
     }
 
     public Vertex findParent(Vertex v) {

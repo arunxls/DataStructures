@@ -26,7 +26,7 @@ public class Graph {
                     Vertex v2;
                     while(true) {
                         v2 = getRandomVertexNotInSet(v, 0, vertices_cache.size() -1);
-                        if(v2.edges.size() < degree) break;
+                        if(v2 == null || v2.edges.size() < degree) break;
                     }
                     addEdge(v,v2);
                 }
@@ -38,8 +38,11 @@ public class Graph {
         }
 
         for(Vertex v : vertices) {
+//            if(v.degree != degree) System.out.println("Error! Vertex " + v.index + " has degree " + v.degree);
+            if(!(v.edgeInSet(vertices.get(vertices.get((v.index+1) % size).index))) || vertices.get((v.index+1) % size).edgeInSet(vertices.get(v.index))) {
+                addEdge(v, vertices.get((v.index+1) % size));
+            }
             v.clearCache();
-            if(v.degree != degree) System.out.println("Error! Vertex " + v.index + " has degree " + v.degree);
         }
     }
 
@@ -56,6 +59,13 @@ public class Graph {
                         edges_cache.add(e);
                     }
                 }
+            }
+            Edge e = new Edge(vertices.get(i), vertices.get((i+1)%size));
+            if(!edges_cache.contains(e)) {
+                vertices.get(i).edges.add(e); vertices.get((i+1)%size).edges.add(e);
+                vertices.get(i).degree++; vertices.get((i+1)%size).degree++;
+                edges.add(e);
+                edges_cache.add(e);
             }
         }
 //        int count = 0;
@@ -75,7 +85,10 @@ public class Graph {
 
     private Vertex getRandomVertexNotInSet(Vertex v, int min, int max) {
         Integer index;
+        int i = 0;
         while (true) {
+            i++;
+            if(i > 10000) return null; //break if we can't find random vertex after lots of tries
             index = randInt(min, max);
             Vertex v2 = vertices_cache.get(index);
             if(v2.index.equals(v.index)) continue;

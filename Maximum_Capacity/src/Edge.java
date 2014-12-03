@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * Created by arunk on 11/14/14.
  */
-public class Edge implements Comparable {
+public class Edge implements Comparable<Edge> {
     final Vertex v1;
     final Vertex v2;
     final Integer weight;
@@ -23,8 +23,7 @@ public class Edge implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        Edge edge = (Edge) o;
+    public int compareTo(Edge edge) {
         return this.weight > edge.weight ? 1 : (this.weight.equals(edge.weight) ? 0 : -1);
     }
 

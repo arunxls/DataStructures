@@ -4,7 +4,7 @@ import java.util.HashSet;
 /**
  * Created by arunk on 11/14/14.
  */
-public class Vertex implements Comparable{
+public class Vertex implements Comparable<Vertex>{
     ArrayList<Edge> edges;
     final Integer index;
     HashSet<Edge> edges_cache;
@@ -33,8 +33,7 @@ public class Vertex implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
-        Vertex v = (Vertex) o;
+    public int compareTo(Vertex v) {
         return this.distance > v.distance ? 1 : (this.distance.equals(v.distance) ? 0 : -1);
     }
 
