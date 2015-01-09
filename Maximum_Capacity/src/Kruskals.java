@@ -32,7 +32,7 @@ public class Kruskals {
                 union(e);
             }
         }
-        System.out.println("Bottleneck is " + lastEdge.weight);
+//        System.out.println("Bottleneck is " + lastEdge.weight);
     }
 
     private Vertex find(Vertex v) {

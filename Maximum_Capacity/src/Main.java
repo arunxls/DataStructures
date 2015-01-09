@@ -20,7 +20,7 @@ public class Main {
 
         int iteration = 0;
         for(int i = 0; i < 5; i++ ) {
-            for(int j = 0; j < 5; j++) {
+            for(int j = 0; j < 10; j++) {
                 System.out.println("\n-------------- Starting Iteration " + iteration++ + " --------------");
                 Graph g1 = new Graph(size); Graph g2 = new Graph(size);
 
@@ -56,13 +56,13 @@ public class Main {
                 new Dijkstras(g1.vertices.get(start), g1.vertices.get(end), g1).findMaximumCapacityPathUsingHeap();
                 endTime = System.nanoTime();
                 System.out.println("\t\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's on sparse graph");
-                getDjikstraParent(g1.vertices.get(end), g1, g1.vertices.get(start));
+//                getDjikstraParent(g1.vertices.get(end), g1, g1.vertices.get(start));
 
                 startTime = System.nanoTime();
                 new Dijkstras(g1.vertices.get(start), g1.vertices.get(end), g1).findMaximumCapacityPathWithoutHeap();
                 endTime = System.nanoTime();
                 System.out.println("\t\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's without heap on sparse graph");
-                getDjikstraParent(g1.vertices.get(end), g1, g1.vertices.get(start));
+//                getDjikstraParent(g1.vertices.get(end), g1, g1.vertices.get(start));
 
 
                 System.out.println("\t------ Running against dense graph ------");
@@ -76,13 +76,13 @@ public class Main {
                 new Dijkstras(g2.vertices.get(start), g2.vertices.get(end), g2).findMaximumCapacityPathUsingHeap();
                 endTime = System.nanoTime();
                 System.out.println("\t\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's on dense graph");
-                getDjikstraParent(g2.vertices.get(end), g2, g2.vertices.get(start));
+//                getDjikstraParent(g2.vertices.get(end), g2, g2.vertices.get(start));
 
                 startTime = System.nanoTime();
                 new Dijkstras(g2.vertices.get(start), g2.vertices.get(end), g2).findMaximumCapacityPathWithoutHeap();
                 endTime = System.nanoTime();
                 System.out.println("\t\tTook " + numberFormat.format(((double)(endTime-startTime))/1000000000) + "s to run Djikstra's without heap on dense graph");
-                getDjikstraParent(g2.vertices.get(end), g2, g2.vertices.get(start));
+//                getDjikstraParent(g2.vertices.get(end), g2, g2.vertices.get(start));
             }
         }
 
