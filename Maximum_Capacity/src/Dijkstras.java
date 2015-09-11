@@ -8,13 +8,15 @@ public class Dijkstras {
     Vertex destination;
     Graph graph;
 
+    //Constructor cleans the graph member
     public Dijkstras(Vertex source, Vertex destination, Graph graph) {
-        this.source = source;
+        this.source      = source;
         this.destination = destination;
-        this.graph = graph;
+        this.graph       = graph;
         graph.cleanCache();
     }
 
+    //Call Dijkstra's using MinHeap
     public void findMaximumCapacityPathUsingHeap() {
         Heap<Vertex> vertices = new Heap<Vertex>();
         for(Vertex v : graph.vertices) v.setUnSeen();
@@ -28,6 +30,7 @@ public class Dijkstras {
         }
     }
 
+    //Add to the fringe set
     private void addVerticesToHeap(Vertex v, Heap<Vertex> vertices) {
         v.setSeen();
         for(Edge e : graph.vertices.get(v.index).edges) {
@@ -46,12 +49,14 @@ public class Dijkstras {
         }
     }
 
+    //Given an edge and a vertex, return the other end of edge
     private Vertex getCorrespondingVertex(Edge e, Vertex v1) {
         Vertex v2 = e.v1;
         if(v2.equals(v1)) v2 = e.v2;
         return v2;
     }
 
+    //Call Dijkstra's to use arrays instead of Heaps
     public void findMaximumCapacityPathWithoutHeap() {
         ArrayList<Vertex> vertices = new ArrayList<Vertex>();
         for(Vertex v : graph.vertices) v.setUnSeen();
@@ -65,6 +70,7 @@ public class Dijkstras {
         }
     }
 
+    //Add vertices to array
     private void addVerticesToArray(Vertex v, ArrayList<Vertex> vertices) {
         v.setSeen();
         for(Edge e : graph.vertices.get(v.index).edges) {
@@ -82,6 +88,8 @@ public class Dijkstras {
         }
     }
 
+    //Since we can't just pop off the root
+    //element as in a heap, we will have to scan the entire array
     public Vertex removeMaxFromArray(ArrayList<Vertex> vertices) {
         Integer max = -1;
         Integer i = -1;

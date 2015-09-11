@@ -15,13 +15,13 @@ public class Vertex implements Comparable<Vertex>{
     Integer distance;
 
     public Vertex(Integer index) {
-        this.index = index;
-        this.degree = 0;
-        this.rank = 0;
-        this.distance = -1; // Dijkstra distance cannot be negative, let this equal -infinity
-        this.parent = this;
-        edges_cache = new HashSet<Edge>();
-        edges = new ArrayList<Edge>();
+        this.index       = index;
+        this.degree      = 0;
+        this.rank        = 0;
+        this.distance    = -1; // Dijkstra distance cannot be negative, let this equal -infinity
+        this.parent      = this;
+        this.edges_cache = new HashSet<Edge>();
+        this.edges       = new ArrayList<Edge>();
     }
 
     public Boolean edgeInSet(Vertex v) {

@@ -9,12 +9,14 @@ public class Edge implements Comparable<Edge> {
     final Integer weight;
 
     public Edge(Vertex v2, Vertex v1) {
-        this.v2 = v2; this.v1 = v1;
+        this.v2     = v2;
+        this.v1     = v1;
         this.weight = randInt(1,1000);
     }
 
     public Edge(Vertex v2, Vertex v1, int weight) {
-        this.v2 = v2; this.v1 = v1;
+        this.v2     = v2;
+        this.v1     = v1;
         this.weight = weight;
     }
 
@@ -29,8 +31,8 @@ public class Edge implements Comparable<Edge> {
 
     @Override
     public int hashCode() {
-        int a = v1.index;
-        int b = v2.index;
+        int a   = v1.index;
+        int b   = v2.index;
         int tmp = b;
         if(a > b) {
             b = a;

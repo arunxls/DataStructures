@@ -6,15 +6,18 @@ import java.util.ArrayList;
 public class Heap<T extends Comparable<T>> {
     public ArrayList<T> heap;
 
+    //This constructor runs heapify
     public Heap(ArrayList<T> heap) {
         this.heap = new ArrayList<T>(heap);
         heapify();
     }
 
+    //Normal constructor
     public Heap() {
         this.heap = new ArrayList<T>();
     }
 
+    //Pop off the max element
     public T removeMax() {
         swap(0, heap.size()-1);
         T tmp = heap.remove(heap.size()-1);
@@ -22,6 +25,7 @@ public class Heap<T extends Comparable<T>> {
         return tmp;
     }
 
+    //Insert a new element
     public void insert (T e) {
         heap.add(e);
         shiftUp(heap.size() -1);
@@ -53,7 +57,7 @@ public class Heap<T extends Comparable<T>> {
              max = rchild;
         }
 
-        if(parent != max) {
+        if(!parent.equals(max)) {
             swap(max, parent);
             shiftDown(max);
         }

@@ -18,6 +18,7 @@ public class Graph {
         for(int i = 0; i < size; i++) vertices.add(i, new Vertex(i));
     }
 
+    //Generate a sparse graph
     public void generateSparse(int degree) {
         vertices_cache = new ArrayList<Vertex>(vertices);
         for(int j=0; j< degree; j++) {
@@ -38,14 +39,15 @@ public class Graph {
         }
 
         for(Vertex v : vertices) {
-//            if(v.degree != degree) System.out.println("Error! Vertex " + v.index + " has degree " + v.degree);
-            if(!(v.edgeInSet(vertices.get(vertices.get((v.index+1) % size).index))) || vertices.get((v.index+1) % size).edgeInSet(vertices.get(v.index))) {
+            if(!(v.edgeInSet(vertices.get(vertices.get((v.index+1) % size).index))) ||
+                    vertices.get((v.index+1) % size).edgeInSet(vertices.get(v.index))) {
                 addEdge(v, vertices.get((v.index+1) % size));
             }
             v.clearCache();
         }
     }
 
+    //Generate a dense graph - follow the reservoir sampling method
     public void generateDense(double percent) {
         HashSet<Edge> edges_cache = new HashSet<Edge>();
         for(int i=0; i < size; i++) {
@@ -68,11 +70,6 @@ public class Graph {
                 edges_cache.add(e);
             }
         }
-//        int count = 0;
-//        for (Vertex v1 : vertices)
-//            count += v1.degree;
-//
-//        System.out.println("Degree density is " + ((double)count/(size*size)));
     }
 
     public void addEdge(Vertex v1, Vertex v2) {
@@ -99,14 +96,6 @@ public class Graph {
 
     private static int randInt(int min, int max) {
         return new Random().nextInt((max - min) + 1) + min;
-    }
-
-    public Integer getEdgeWeight(Vertex v1, Vertex v2) {
-        Edge e1 = new Edge(v1, v2);
-        for(Edge e2 : edges) {
-            if(e1.equals(e2)) e1=e2;
-        }
-        return e1.weight;
     }
 
     public void cleanCache() {

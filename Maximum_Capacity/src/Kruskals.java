@@ -10,31 +10,28 @@ public class Kruskals {
     Graph graph;
     ArrayList<Vertex> stack;
 
+    //Clean the graph member
     public Kruskals(Vertex source, Vertex destination, Graph graph) {
-        this.source = source;
+        this.source      = source;
         this.destination = destination;
-        this.edges = new Heap<Edge>(graph.edges);
-        this.graph = graph;
+        this.edges       = new Heap<Edge>(graph.edges);
+        this.graph       = graph;
+        this.stack       = new ArrayList<Vertex>();
         graph.cleanCache();
-        stack = new ArrayList<Vertex>();
     }
 
+    //Run kruskals
     public void findMaximumCapacityPath() {
-        ArrayList<Edge> path = new ArrayList<Edge>();
-        Edge lastEdge = graph.edges.get(0);
         while(edges.heap.size() != 0) {
             Edge e = edges.removeMax();
             if(findParent(source).equals(findParent(destination))) break;
-//            System.out.println("Selected k " + e.weight);
             if(!findParent(e.v1).equals(findParent(e.v2))) {
-//                System.out.println("Picking k " + e.weight);
-                lastEdge = e;
                 union(e);
             }
         }
-//        System.out.println("Bottleneck is " + lastEdge.weight);
     }
 
+    //Called by findParent to move up the stack
     private Vertex find(Vertex v) {
         Vertex parent = v.parent;
         if(parent.equals(v)) return parent;
@@ -42,6 +39,7 @@ public class Kruskals {
         return find(parent);
     }
 
+    //Finds the overall parent
     public Vertex findParent(Vertex v) {
         Vertex parent = find(v);
         for(Vertex v1: stack) {
@@ -51,6 +49,7 @@ public class Kruskals {
         return parent;
     }
 
+    //Unions two parents
     public void union(Edge e) {
         Vertex v1 = findParent(e.v1);
         Vertex v2 = findParent(e.v2);
